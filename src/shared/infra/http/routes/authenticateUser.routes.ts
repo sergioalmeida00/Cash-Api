@@ -13,5 +13,4 @@ routerAuthenticateUser.post('/user', (request:Request, response:Response)=>{
     authenticateUserController.handle(request,response);
 });
 
-
 export {routerAuthenticateUser}
