@@ -4,4 +4,5 @@ interface ITransactionDTO{
     userIdAccountSender:string 
 }
 
+
 export {ITransactionDTO}
