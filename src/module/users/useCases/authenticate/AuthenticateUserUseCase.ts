@@ -15,7 +15,7 @@ export class AuthenticateUserUseCase{
             throw new AppError("UserName or password incorrect.");
         }
 
-        const responsePasswordMatch = await compare(password, responseUser.passaword);
+        const responsePasswordMatch = await compare(password, responseUser.password);
 
         if(!responsePasswordMatch){
             throw new AppError("UserName or password incorrect.");

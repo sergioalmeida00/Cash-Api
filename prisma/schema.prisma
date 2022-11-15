@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Users {
-  id          String @id @default(uuid())
-  username    String @unique @db.VarChar(70)
-  passaword   String @db.VarChar(100)
-  accounts_id String @unique
+  id         String @id @default(uuid())
+  username   String @unique @db.VarChar(70)
+  password   String @db.VarChar(100)
+  account_id String @unique
 
-  account Accounts @relation(fields: [accounts_id], references: [id])
+  account Accounts @relation(fields: [account_id], references: [id])
 
   @@map("user")
 }
@@ -35,10 +35,10 @@ model Transactions {
   value               Decimal  @db.Decimal(5, 2)
   created_at          DateTime @default(now())
   credited_account_id String
-  debited_account_id  String?
+  debited_account_id  String
 
-  AccountCredited Accounts  @relation("credited", fields: [credited_account_id], references: [id])
-  AccountDebited  Accounts? @relation("debited", fields: [debited_account_id], references: [id])
+  AccountCredited Accounts @relation("credited", fields: [credited_account_id], references: [id])
+  AccountDebited  Accounts @relation("debited", fields: [debited_account_id], references: [id])
 
   @@map("trasaction")
 }

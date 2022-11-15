@@ -9,7 +9,7 @@ export class UserRepository implements IUserRepository{
         await prismaDb.users.create({
             data:{
                 username,
-                passaword:password,
+                password,
                 account:{
                     create:{
                         balance:100
@@ -28,5 +28,15 @@ export class UserRepository implements IUserRepository{
 
         return responseUsername;
     }
+
+    async findByIdUser(user_id: string): Promise<Users> {
+        const responseUser = await prismaDb.users.findUnique({
+            where:{
+                id:user_id
+            }
+        });
+
+        return responseUser;
+    }   
 
 }
