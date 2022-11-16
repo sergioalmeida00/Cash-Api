@@ -4,5 +4,12 @@ interface ITransactionDTO{
     userIdAccountSender:string 
 }
 
+interface IGetTransactionByDateDTO{
+    dateStart:Date,
+    dateEnd:Date,
+    user_id?:string,
+    account_id?:string
+}
 
-export {ITransactionDTO}
+
+export {ITransactionDTO,IGetTransactionByDateDTO}

@@ -15,7 +15,7 @@ model Users {
 
   account Accounts @relation(fields: [account_id], references: [id])
 
-  @@map("user")
+  @@map("users")
 }
 
 model Accounts {
@@ -40,5 +40,5 @@ model Transactions {
   AccountCredited Accounts @relation("credited", fields: [credited_account_id], references: [id])
   AccountDebited  Accounts @relation("debited", fields: [debited_account_id], references: [id])
 
-  @@map("trasaction")
+  @@map("transaction")
 }

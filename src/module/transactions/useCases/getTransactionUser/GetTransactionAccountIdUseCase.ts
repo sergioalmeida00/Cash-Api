@@ -16,7 +16,7 @@ export class GetTransactionAccountIdUseCase{
         const responseTransactionAccountIdUser = await this.transactionRepository.getTransactionAccountId(responseUser.account_id);
 
         if(!responseTransactionAccountIdUser){
-            throw new AppError("No Existing Transaction.",200);
+            throw new AppError("No Existing Transaction.",400);
         }
         return responseTransactionAccountIdUser;
     }

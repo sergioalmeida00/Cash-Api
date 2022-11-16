@@ -1,7 +1,8 @@
+import { CreateUserController } from "@module/users/useCases/createUser/CreateUserController";
+import { CreateUserUseCase } from "@module/users/useCases/createUser/CreateUserUseCase";
 import { Request, Response, Router } from "express";
 import { UserRepository } from "module/users/repositories/UserRepository";
-import { CreateUserController } from "module/users/useCases/CreateUserController";
-import { CreateUserUseCase } from "module/users/useCases/CreateUserUseCase";
+
 
 const routeUser = Router();
 const userRepository = new UserRepository();

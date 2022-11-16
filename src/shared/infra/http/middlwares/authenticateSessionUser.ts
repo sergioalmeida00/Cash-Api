@@ -5,6 +5,7 @@ import { verify } from 'jsonwebtoken';
 
 interface IPayload {
     sub: string;
+    account_id:string
   }
 
 export async function authenticateSessionUser(request:Request, response:Response, next:NextFunction){
@@ -17,10 +18,11 @@ export async function authenticateSessionUser(request:Request, response:Response
     const[,token] = authHeader.split(" ");
 
     try {
-        const {sub:user_id} = verify(token, `${process.env.SECRET}`) as IPayload;
+        const {sub:user_id, account_id} = verify(token, `${process.env.SECRET}`) as IPayload;
 
         request.user = {
-            id:user_id
+            id:user_id,
+            account_id
         }
 
         next();

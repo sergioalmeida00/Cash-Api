@@ -1,9 +1,10 @@
 import { Transactions } from "@prisma/client";
-import { ITransactionDTO } from "../transactionDTO/ITransactionDTO";
+import { IGetTransactionByDateDTO, ITransactionDTO } from "../transactionDTO/ITransactionDTO";
 
 interface ITransactionRepository{
     createTransaction(dataTransaction:ITransactionDTO):Promise<void>;
     getTransactionAccountId(accountUserId:string):Promise<Transactions[]>;
+    getTransactionByDate({dateStart,dateEnd}:IGetTransactionByDateDTO):Promise<Transactions[]>;
 }
 
 export {ITransactionRepository}

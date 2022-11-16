@@ -21,7 +21,7 @@ export class AuthenticateUserUseCase{
             throw new AppError("UserName or password incorrect.");
         }
 
-        const token = sign({username:responseUser.username}, `${process.env.SECRET}`,{
+        const token = sign({username:responseUser.username, account_id:responseUser.account_id}, `${process.env.SECRET}`,{
             subject:responseUser.id,
             expiresIn:'1d'
         });

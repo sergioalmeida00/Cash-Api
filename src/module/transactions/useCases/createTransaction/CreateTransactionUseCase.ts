@@ -1,7 +1,7 @@
+import { ITransactionRepository } from "@module/transactions/repositories/ITransactionRepository";
 import { AppError } from "@shared/erros/AppError";
 import { IAccountRepository } from "module/accounts/repositories/IAccountRepository";
 import { IUserRepository } from "module/users/repositories/IUserRepository";
-import { ITransactionRepository } from "../repositories/ITransactionRepository";
 
 interface IRequest{
     userNameRecipient:string,

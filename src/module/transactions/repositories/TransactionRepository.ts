@@ -1,6 +1,6 @@
 import { Transactions } from "@prisma/client";
 import { prismaDb } from "@shared/infra/prismaORM";
-import { ITransactionDTO } from "../transactionDTO/ITransactionDTO";
+import { IGetTransactionByDateDTO, ITransactionDTO } from "../transactionDTO/ITransactionDTO";
 import { ITransactionRepository } from "./ITransactionRepository";
 
 export class TransactionRepository implements ITransactionRepository{
@@ -66,4 +66,18 @@ export class TransactionRepository implements ITransactionRepository{
         return responseTransactionAccountIdUser;
     }
     
+    async getTransactionByDate({ dateStart, dateEnd, account_id}: IGetTransactionByDateDTO): Promise<Transactions[]> {
+        const responseTransaction = prismaDb.$queryRaw<Transactions[]>`
+                SELECT
+                *
+                FROM
+                transaction
+                WHERE
+                (
+                    credited_account_id = ${account_id}
+                    OR debited_account_id = ${account_id}
+                )
+                AND created_at::date BETWEEN ${new Date(dateStart)} AND ${new Date(dateEnd)}`;
+        return responseTransaction;
+    }
 }
