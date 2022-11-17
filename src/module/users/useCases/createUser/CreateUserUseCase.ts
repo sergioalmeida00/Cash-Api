@@ -8,7 +8,7 @@ import { IUserRepository } from "@module/users/repositories/IUserRepository";
 export class CreateUserUseCase{
     constructor(private userRepository:IUserRepository){}
 
-    async execute({username,password}:ICreateUserDTO):Promise<void>{
+    async execute({username,password}:ICreateUserDTO):Promise<Users>{
         const userExists = await this.userRepository.findByUserName(username) ;
         if(userExists){
             throw new AppError("UserName already exists.");            
@@ -24,7 +24,9 @@ export class CreateUserUseCase{
 
         const passwordHash = await hash(password,8);
 
-        await this.userRepository.create({username,password:passwordHash });
+        const responseUser = await this.userRepository.create({username,password:passwordHash });
+
+        return responseUser;
     }
 
     static CheckPassword(password:string):Boolean{
