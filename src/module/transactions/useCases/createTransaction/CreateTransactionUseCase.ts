@@ -35,6 +35,7 @@ export class CreateTransactionUseCase{
             throw new AppError("insufficient funds.");
         }
 
+
         await this.transactionRepository.createTransaction({
             userIdAccountSender: String(responseUserSender.account_id,),
             userIdAccountRecipient: String(responseUserRecipient.account_id),

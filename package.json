@@ -7,6 +7,9 @@
     "dev": "ts-node-dev --exit-child -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "test": "jest --runInBand"
   },
+  "prisma":{
+    "seed":"ts-node-dev src/shared/infra/prismaORM/seed/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^4.6.1",
     "bcryptjs": "^2.4.3",
