@@ -10,11 +10,13 @@ export class GetTransactionByDateController{
     async handle(request:Request, response:Response):Promise<Response>{
         const {account_id} = request.user;
         const {dateStart,dateEnd} = request.body;
+        try {
+                
+            const responseTransaction = await this.getTransactionByDateUseCase.execute({dateStart,dateEnd,account_id});
 
-    
-        const responseTransaction = await this.getTransactionByDateUseCase.execute({dateStart,dateEnd,account_id});
-
-        return response.status(200).json(responseTransaction);
-        
+            return response.status(200).json(responseTransaction);
+        } catch (error) {
+            throw new AppError(error);            
+        }       
     }
 }

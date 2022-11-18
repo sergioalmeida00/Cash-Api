@@ -5,7 +5,7 @@ import { ITransactionRepository } from "./ITransactionRepository";
 
 export class TransactionRepository implements ITransactionRepository{
 
-    async createTransaction({ userIdAccountSender, userIdAccountRecipient, amount}: ITransactionDTO): Promise<void> {
+    async createTransaction({ userIdAccountSender, userIdAccountRecipient, amount}: ITransactionDTO): Promise<Transactions> {
           await prismaDb.$transaction([
             prismaDb.accounts.update({
                 data:{balance:{decrement:Number(amount)}},
@@ -19,15 +19,17 @@ export class TransactionRepository implements ITransactionRepository{
                     balance:{increment:Number(amount)},                 
                  },
                 where:{id:userIdAccountRecipient}
-            }),
-            prismaDb.transactions.create({
-                data:{
-                    value:Number(amount),
-                    credited_account_id:userIdAccountRecipient,
-                    debited_account_id:userIdAccountSender
-                }   
-            })
+            })     
         ]);     
+        const responseTransaction = await prismaDb.transactions.create({
+            data:{
+                value:Number(amount),
+                credited_account_id:userIdAccountRecipient,
+                debited_account_id:userIdAccountSender
+            }   
+        });
+
+        return responseTransaction;        
     }
 
     async getTransactionAccountId(accountUserId: string): Promise<Transactions[]> {
@@ -69,9 +71,18 @@ export class TransactionRepository implements ITransactionRepository{
     async getTransactionByDate({ dateStart, dateEnd, account_id}: IGetTransactionByDateDTO): Promise<Transactions[]> {
         const responseTransaction = prismaDb.$queryRaw<Transactions[]>`
                 SELECT
-                *
+                    CASE
+                        WHEN transaction.credited_account_id = ${account_id} THEN 'CREDIT'
+                        ELSE 'DEBIT'
+                    END TYPE_TRANSACTION,
+                    transaction.id,
+                    transaction.value,
+                    transaction.credited_account_id,
+                    transaction.debited_account_id,
+                    users.username
                 FROM
                 transaction
+                INNER JOIN users on(users.account_id = transaction.debited_account_id)
                 WHERE
                 (
                     credited_account_id = ${account_id}

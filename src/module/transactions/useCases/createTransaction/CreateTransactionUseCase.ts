@@ -1,4 +1,5 @@
 import { ITransactionRepository } from "@module/transactions/repositories/ITransactionRepository";
+import { Transactions } from "@prisma/client";
 import { AppError } from "@shared/erros/AppError";
 import { IAccountRepository } from "module/accounts/repositories/IAccountRepository";
 import { IUserRepository } from "module/users/repositories/IUserRepository";
@@ -16,7 +17,7 @@ export class CreateTransactionUseCase{
         private transactionRepository:ITransactionRepository
     ){}
     
-    async execute({userNameRecipient,amount,userSenderId}:IRequest){
+    async execute({userNameRecipient,amount,userSenderId}:IRequest):Promise<Transactions>{
         const responseUserSender = await this.userRepository.findByIdUser(userSenderId);
         
         if(responseUserSender.username === userNameRecipient){
@@ -35,12 +36,12 @@ export class CreateTransactionUseCase{
             throw new AppError("insufficient funds.");
         }
 
-
-        await this.transactionRepository.createTransaction({
+        const responseTransaction = await this.transactionRepository.createTransaction({
             userIdAccountSender: String(responseUserSender.account_id,),
             userIdAccountRecipient: String(responseUserRecipient.account_id),
             amount
         });
+        return responseTransaction;
         
     }
 }

@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  database:
+    image: postgres
+    container_name: cash
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=cash
+    volumes:
+    - ./pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    container_name: cashng
+    ports:
+      - 3131:3131
+    volumes:
+      - .:/usr/app
+
+volumes:
+  pgdata:
+    driver: local
