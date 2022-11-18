@@ -30,7 +30,7 @@
     - `POST - http://localhost:3131/user/create`
         - A rota recebe `username` e `password` dentro do corpo da requisição, salva o usuário e cria uma determinada conta com o saldo de 100, retornando statusCode 201.
         
-        ```tsx
+        ```json
         //SEND EXAMPLE
         {
         	"username":"johndoe",
@@ -50,7 +50,7 @@
         }
         ```
         
-        ```tsx
+        ```json
         //RETURN EXAMPLE
         {
         	"user": {
@@ -65,7 +65,7 @@
     - `POST - http://localhost:3131/transaction/create`
         - A rota recebe um token JWT pelo header, junto com a informação do  `username` destino e o valor da transferência `amount` no corpo da requisição, registra a operação diminuindo o saldo da conta do usuário logado que realizou a transferência e adicionar o valor na conta do usuário destino retorna as informações da transferência criado com status `201`.
         
-        ```tsx
+        ```json
         //SEND EXAMPLE
         {
         	"username":"userdestino",
@@ -73,7 +73,7 @@
         }
         ```
         
-        ```tsx
+        ```json
         //RETURN EXAMPLE
         {
         	"id": "d5231275-9e1d-4838-8ad6-d868ceb7a9c5",
@@ -87,7 +87,7 @@
     - `GET - [http://localhost:3131/account/balance](http://localhost:3131/account/balance)`
         - A rota recebe um token JWT pelo header da requisição e retorna o saldo total pertinente ao usuário do TOKEN propriedade `balance`.
         
-        ```tsx
+        ```json
         //RETURN EXAMPLE
         {
         	"id": "e0df4083-a6b0-430f-b7a4-a5b5e7a6dd6e",
@@ -98,7 +98,7 @@
     - `GET - [http://localhost:3131/transaction/period/list](http://localhost:3131/transaction/period/list)`
         - A rota recebe um TOKEN JWT pelo header, e no body a informação do período que deseja fazer a busca `dateStart` e `dateEnd` , assim retornando uma lista com todas as operações *cash-out ou*  *cash-in* pertinente ao usuário do TOKEN no determinado período informado.
         
-        ```tsx
+        ```json
         //SEND EXAMPLE
         {
         	"dateStart":"2022-11-01",
@@ -106,7 +106,7 @@
         }
         ```
         
-        ```tsx
+        ```json
         //RETURN EXAMPLE
         [
         	{
@@ -131,7 +131,7 @@
     - `GET - [http://localhost:3131/transaction/list](http://localhost:3131/transaction/list)`
         - A rota recebe um TOKEN JWT pelo header, assim retornando uma lista com todas as operações realizadas apenas pelo usuário do TOKEN.
         
-        ```tsx
+        ```json
         //RETURN EXAMPLE
         [
         	{
