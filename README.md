@@ -1,4 +1,4 @@
-# Untitled
+# Cash API
 
 ## 🔥 Tecnologias
 
@@ -24,7 +24,7 @@
 7. Start Aplicação `yarn dev`
 8. Test Unitarios `yarn test`
 
-## **Cash API**
+## **Rotas**
 
 - Rotas da aplicação
     - `POST - http://localhost:3131/user/create`
